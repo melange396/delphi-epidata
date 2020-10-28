@@ -5,6 +5,7 @@ nav_order: 4
 ---
 
 # COVIDcast Geographic Coding
+{: .no_toc}
 
 The `geo_value` field returned by the API specifies the geographic location
 whose estimate is being reported. Estimates are available for several possible
@@ -13,8 +14,10 @@ whose estimate is being reported. Estimates are available for several possible
 * `county`: County-level estimates are reported by the county's five-digit [FIPS
   code](https://en.wikipedia.org/wiki/FIPS_county_code). All FIPS codes are
   reported using pre-2015 FIPS code assignments, *except* for FIPS codes used by
-  the `jhu-csse` source. These are reported exactly as JHU reports their data;
-  [see below](#fips-exceptions-in-jhu-data).
+  the `jhu-csse` and `usa-facts` sources. These are reported exactly as the
+  sources report their data; [see below](#coding-exceptions). FIPS codes ending
+  in `000` are not valid counties, and instead represent "megacounties" we
+  construct; [see below](#small-sample-sizes-and-megacounties).
 * `hrr`: Hospital Referral Region, units designed to represent regional health
   care markets. There are roughly 300 HRRs in the United States. A map is
   available
@@ -28,10 +31,14 @@ whose estimate is being reported. Estimates are available for several possible
   media markets, as [defined by
   Nielsen](https://www.nielsen.com/us/en/intl-campaigns/dma-maps/).
 * `state`: The 50 states, identified by their two-digit postal abbreviation (in
-  lower case). Estimates for Puerto Rico are available as state `pr`; Washington, D.C. is available as state `dc`.
+  lower case). Estimates for Puerto Rico are available as state `pr`;
+  Washington, D.C. is available as state `dc`.
 
 Some signals are not available for all `geo_type`s, since they may be reported
-from their original sources with different levels of aggregation.
+by their original sources with different levels of aggregation.
+
+## Table of contents
+{: .no_toc .text-delta}
 
 1. toc
 {:toc}
@@ -46,92 +53,32 @@ identification of respondents, violating privacy and confidentiality agreements.
 Additional considerations for specific signals are discussed in the [source and
 signal documentation](covidcast_signals.md).
 
-In each state, we collect together the data from all counties with insufficient
-data to be individually reported. These counties are combined into a single
-"megacounty". For example, if only five counties in a state have sufficient data
-to be reported, the remaining counties will form one megacounty representing the
-rest of that state. As sample sizes vary from day to day, the counties composing
-the megacounty can vary daily; the geographic area covered by the megacounty is
-simply the state minus the counties reported for that day.
+On each day, in each state, we collect together the data from all counties with
+insufficient data to be individually reported. These counties are combined into
+a single "megacounty". For example, if only five counties in a state have
+sufficient data to be reported, the remaining counties will form one megacounty
+representing the rest of that state. Megacounty estimates are reported with a
+FIPS code ending with `000`, which is never a FIPS code for a real county. For
+example, megacounty estimates for the state of New York are reported with FIPS
+code `36000`, since `36` is the FIPS code prefix for New York.
 
-Megacounty estimates are reported with a FIPS code ending with 000, which is
-never a FIPS code for a real county. For example, megacounty estimates for the
-state of New York are reported with FIPS code 36000, since 36 is the FIPS code
-prefix for New York.
+These megacounty estimates are used on our COVIDcast map and in the county maps
+produced by our [API clients](covidcast_clients.md), to color in the background
+of states and graphically represent the "rest of" states whose counties are not
+all individually reported.
 
+**Warning:** As sample sizes vary from day to day, the counties composing the
+megacounty can vary daily; the geographic area covered by the megacounty is
+simply the state minus the counties reported for that day. The megacounty
+construction also depends on the specific source and signal, so on one day,
+megacounty `36000` can cover a different geographic area for the `doctor-visits`
+source than it does for the `fb-survey` source. Do not try to compare megacounty
+estimates across time or between signals.
 
-## FIPS Exceptions in JHU Data
+## Coding Exceptions
 
-At the County (FIPS) level, we report the data _exactly_ as JHU reports their
-data, to prevent confusing public consumers of the data. JHU FIPS reporting
-matches that used in the other signals, except for the following exceptions.
-
-### New York City
-New York City comprises five boroughs:
-
-|Borough Name       |County Name        |FIPS Code      |
-|-------------------|-------------------|---------------|
-|Manhattan          |New York County    |36061          |
-|The Bronx          |Bronx County       |36005          |
-|Brooklyn           |Kings County       |36047          |
-|Queens             |Queens County      |36081          |
-|Staten Island      |Richmond County    |36085          |
-
-**Data from all five boroughs are reported under New York County,
-FIPS Code 36061.**  The other four boroughs are included in the dataset
-and show up in our API, but they should be uniformly zero.
-
-All NYC counts are mapped to the MSA with CBSA ID 35620, which encompasses all
-five boroughs. All NYC counts are mapped to HRR 303, which intersects all five
-boroughs (297 also intersects the Bronx, 301 also intersects Brooklyn and
-Queens, but absent additional information, we chose to leave all counts in 303).
-
-### Kansas City, Missouri
-
-Kansas City intersects the following four counties, which themselves report
-confirmed case and deaths data:
-
-|County Name        |FIPS Code      |
-|-------------------|---------------|
-|Jackson County     |29095          |
-|Platte County      |29165          |
-|Cass County        |29037          |
-|Clay County        |29047          |
-
-**Data from Kansas City is given its own dedicated line, with FIPS
-code 70003.**  This is how JHU encodes their data.  However, the data in
-the four counties that Kansas City intersects is not necessarily zero.
-
-For the mapping to HRR and MSA, the counts for Kansas City are dispersed to
-these four counties in equal proportions.
-
-### Dukes and Nantucket Counties, Massachusetts
-
-**The counties of Dukes and Nantucket report their figures together,
-and we (like JHU) list them under FIPS Code 70002.**  Here are the FIPS codes
-for the individual counties:
-
-|County Name        |FIPS Code      |
-|-------------------|---------------|
-|Dukes County       |25007          |
-|Nantucket County   |25019          |
-
-For the mapping to HRR and MSA, the counts for Dukes and Nantucket are
-dispersed to the two counties in equal proportions.
-
-The data in the individual counties is expected to be zero.
-
-### Mismatched FIPS Codes
-
-Finally, there are two FIPS codes that were changed in 2015 (see the [Census
-Bureau
-documentation](https://www.census.gov/programs-surveys/geography/technical-documentation/county-changes.html)),
-leading to mismatch between us and JHU. We report the data using the FIPS code
-used by JHU, again to promote consistency and avoid confusion by external users
-of the dataset. For the mapping to MSA, HRR, these two counties are included
-properly.
-
-|County Name        |State          |"Our" FIPS         |JHU FIPS       |
-|-------------------|---------------|-------------------|---------------|
-|Oglala Lakota      |South Dakota   |46113              |46102          |
-|Kusilvak           |Alaska         |02270              |02158          |
+1. The cases and deaths data from JHU CSSE has some geographic exceptions in its
+   coding and reporting; see [its documentation](covidcast-signals/jhu-csse.md)
+   for more details.
+2. The cases and deaths data from USAFacts also has geographic exceptions; see
+   [its documentation](covidcast-signals/usa-facts.md) for details.

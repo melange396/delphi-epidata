@@ -13,15 +13,13 @@ geographic levels at which they are reported.
 
 ## The API
 
-The base URL is: https://delphi.cmu.edu/epidata/api.php
+The base URL is: https://api.covidcast.cmu.edu/epidata/api.php
 
 See [this documentation](README.md) for details on specifying epiweeks, dates, and lists.
 
 ### Parameters
 
-| Parameter | Description | Type |
-| --- | --- | --- |
-| `cached` | If `true`, return a cached copy of the metadata instead of recalculating from scratch; the cached copy should never be more than an hour out of date. Recalculation without the cache can be quite slow. *Note:* a future API version will always report the cached version, ignoring this parameter. | string |
+None required.
 
 ### Response
 
@@ -33,18 +31,21 @@ See [this documentation](README.md) for details on specifying epiweeks, dates, a
 | `epidata[].signal` | signal name | string |
 | `epidata[].time_type` | temporal resolution of the signal (e.g., `day`, `week`) | string |
 | `epidata[].geo_type` | geographic resolution (e.g. `county`, `hrr`, `msa`, `dma`, `state`) | string |
-| `epidata[].min_time` | minimum time (e.g., 20200406) | integer |
-| `epidata[].max_time` | maximum time (e.g., 20200413) | integer |
+| `epidata[].min_time` | minimum observation time (e.g., 20200406) | integer |
+| `epidata[].max_time` | maximum observation time (e.g., 20200413) | integer |
 | `epidata[].num_locations` | number of distinct geographic locations with data | integer |
 | `epidata[].min_value` | minimum value | float |
 | `epidata[].max_value` | maximum value | float |
 | `epidata[].mean_value` | mean of value | float |
 | `epidata[].stdev_value` | standard deviation of value | float |
+| `epidata[].max_issue` | most recent date data was issued (e.g., 20200710) | integer |
+| `epidata[].min_lag` | smallest lag from observation to issue, in `time_type` units | integer |
+| `epidata[].max_lag` | largest lag from observation to issue, in `time_type` units | integer |
 | `message` | `success` or error message | string |
 
 ## Example URLs
 
-https://delphi.cmu.edu/epidata/api.php?source=covidcast_meta&cached=true
+https://api.covidcast.cmu.edu/epidata/api.php?source=covidcast_meta
 
 ```json
 {
@@ -104,7 +105,8 @@ Epidata.covidcast_meta(callback)
 ### Python
 
 Python users seeking to use the COVIDcast API to fetch data should instead
-consider using the [dedicated API client](covidcast_clients.md).
+consider using the [dedicated API client](covidcast_clients.md), which provides
+a `metadata()` method to return metadata as a data frame.
 
 Optionally install the package using pip(env):
 ````bash
@@ -124,7 +126,8 @@ print(res['result'], res['message'], len(res['epidata']))
 ### R
 
 R users seeking to use the COVIDcast API to fetch data should instead consider
-using the [dedicated API client](covidcast_clients.md).
+using the [dedicated API client](covidcast_clients.md), which provides a
+`covidcast_meta()` function to return metadata as a data frame.
 
 ````R
 # Import
