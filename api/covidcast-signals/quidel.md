@@ -1,7 +1,7 @@
 ---
 title: Quidel
 parent: Data Sources and Signals
-grand_parent: COVIDcast API
+grand_parent: COVIDcast Epidata API
 ---
 
 # Quidel
@@ -21,6 +21,8 @@ grand_parent: COVIDcast API
 * **Number of data revisions since 19 May 2020:** 1
 * **Date of last change:** 22 October 2020
 * **Available for:** hrr, msa, state (see [geography coding docs](../covidcast_geography.md))
+* **Time type:** day (see [date format docs](../covidcast_times.md))
+* **License:** [CC BY](../covidcast_licensing.md#creative-commons-attribution)
 
 Data source based on COVID-19 Antigen tests, provided to us by Quidel, Inc. When
 a patient (whether at a doctor’s office, clinic, or hospital) has COVID-like
@@ -139,6 +141,7 @@ June 14th and subsequently revised on June 16th.
 * **Number of data revisions since 19 May 2020:** 0
 * **Date of last change:** Never
 * **Available for:** msa, state (see [geography coding docs](../covidcast_geography.md))
+* **Time type:** day (see [date format docs](../covidcast_times.md))
 
 Data source based on flu lab tests, provided to us by Quidel, Inc. When a
 patient (whether at a doctor’s office, clinic, or hospital) has COVID-like

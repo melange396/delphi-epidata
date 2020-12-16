@@ -1,10 +1,10 @@
 ---
-title: COVIDcast API
+title: COVIDcast Epidata API
 has_children: true
 nav_order: 1
 ---
 
-# Delphi's COVIDcast API
+# COVIDcast Epidata API
 
 This is the documentation for accessing the Delphi's COVID-19 Surveillance
 Streams (`covidcast`) endpoint of [Delphi](https://delphi.cmu.edu/)'s
@@ -17,13 +17,6 @@ partners. The API allows users to select specific signals and download data for
 selected geographical areas---counties, states, metropolitan statistical areas,
 and other divisions.
 
-This data is freely available under our [licensing](README.md#data-licensing)
-terms; we encourage academic users to [cite](README.md#citing) the data if they
-use it in any publications. Our [data ingestion
-code](https://github.com/cmu-delphi/covidcast-indicators) and [API server
-code](https://github.com/cmu-delphi/delphi-epidata) is open-source, and
-contributions are welcome. Further documentation on Delphi's APIs is available
-in the [API overview](README.md).
 
 <div style="background-color:#FCC; padding: 10px 30px;"><strong>Get
 updates:</strong> Delphi operates a <a
@@ -40,6 +33,15 @@ href="https://lists.andrew.cmu.edu/mailman/listinfo/delphi-covidcast-api">subscr
 
 1. TOC
 {:toc}
+
+## Licensing
+Like all other Delphi Epidata datasets, our COVIDcast data is freely available to the public. However, our COVID-19 surveillance streams include data from many different sources, with data licensing handled separately for each source. For a summary of the licenses used and a list of the indicators each license applies to, we suggest users visit our [COVIDcast licensing](covidcast_licensing.md) page. Licensing information is also summarized on each indicator's details page.
+We encourage academic users to [cite](README.md#citing) the data if they
+use it in any publications. Our [data ingestion
+code](https://github.com/cmu-delphi/covidcast-indicators) and [API server
+code](https://github.com/cmu-delphi/delphi-epidata) is open-source, and
+contributions are welcome. Further documentation on Delphi's APIs is available
+in the [API overview](README.md).
 
 ## Accessing the Data
 
@@ -106,7 +108,7 @@ and lists.
 | --- | --- | --- |
 | `data_source` | name of upstream data source (e.g., `doctor-visits` or `fb-survey`; [see full list](covidcast_signals.md)) | string |
 | `signal` | name of signal derived from upstream data (see notes below) | string |
-| `time_type` | temporal resolution of the signal (e.g., `day`, `week`) | string |
+| `time_type` | temporal resolution of the signal (e.g., `day`, `week`; see [date coding details](covidcast_times.md)) | string |
 | `geo_type` | spatial resolution of the signal (e.g., `county`, `hrr`, `msa`, `dma`, `state`) | string |
 | `time_values` | time unit (e.g., date) over which underlying events happened | `list` of time values (e.g., 20200401) |
 | `geo_value` | unique code for each location, depending on `geo_type` (see [geographic coding details](covidcast_geography.md)), or `*` for all | string |
@@ -162,7 +164,7 @@ require knowing when an unchanged value was last confirmed, please get in touch.
 | `result` | result code: 1 = success, 2 = too many results, -2 = no results | integer |
 | `epidata` | list of results, 1 per geo/time pair | array of objects |
 | `epidata[].geo_value` | location code, depending on `geo_type` | string |
-| `epidata[].time_value` | time unit (e.g. date) over which underlying events happened | integer |
+| `epidata[].time_value` | time unit (e.g. date) over which underlying events happened (see [date coding details](covidcast_times.md)) | integer |
 | `epidata[].direction` | trend classifier (+1 -> increasing, 0 -> steady or not determined, -1 -> decreasing) | integer |
 | `epidata[].value` | value (statistic) derived from the underlying data source | float |
 | `epidata[].stderr` | approximate standard error of the statistic with respect to its sampling distribution, `null` when not applicable | float |

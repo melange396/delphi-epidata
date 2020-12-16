@@ -1,6 +1,6 @@
 ---
 title: Signal Changelog
-parent: COVIDcast API
+parent: COVIDcast Epidata API
 nav_order: 3
 ---
 
@@ -25,6 +25,9 @@ changes, data corrections, and other information relevant to API users.
 
 ## Sources and Signals
 ### `doctor-visits`
+#### 9 November 2020
+We went from a custom geo mapping file (for aggregating from county->(msa, hrr, state)) to a central geo file based on rigorously sourced US census data.
+
 ### `fb-survey`
 
 #### 3 June 2020
@@ -40,6 +43,13 @@ Duplicate survey weights had corrupted historical figures for the following sign
   * `hrr`: 20200406-20200415, 20200430-20200506
   * `msa`: 20200408-20200414, 20200430-20200506
   * `state`: 20200408-20200416, 20200430-20200506
+  
+#### 20 November 2020  
+
+Due to a bug in our data processing system, estimates of the percentage of people reporting that they have been tested for COVID-19 calculated before October 8th were incorrect. 
+We incorrectly treated an answer of “no” as a missing response, which affected the `smoothed_tested_14d` and `smoothed_wtested_14d` signals from the `fb-survey` source. 
+
+As of Nov. 20th, the error has been corrected and all affected data reissued. 
 
 ### `google-survey`
 ### `ght`
@@ -86,7 +96,15 @@ The 10 October 2020 issue of all `indicator-combination` deaths signals has been
 #### 22 October 2020
 We went from a custom geo mapping file (for aggregating from zip->(county, msa, hrr, state)) to a central geo file based on rigorously sourced US census data.
 
+### `safegraph`
+
+#### 3 November 2020
+We went from a custom geo mapping file (for aggregating from county->state) to a central geo file based on rigorously sourced US census data.
+
 ### `usa-facts`
+
+#### 3 November 2020
+We went from a custom geo mapping file (for aggregating from county->(msa, hrr, state)) to a central geo file based on rigorously sourced US census data.
 
 #### 12 October 2020
 

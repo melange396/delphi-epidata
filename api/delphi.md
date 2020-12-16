@@ -1,6 +1,6 @@
 ---
 title: Delphi Forecasts
-parent: Delphi Epidata API
+parent: Epidata API (Other Diseases)
 ---
 
 # Delphi Forecasts

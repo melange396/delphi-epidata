@@ -1,5 +1,5 @@
 ---
-title: Delphi Epidata API
+title: Epidata API (Other Diseases)
 nav_order: 3
 has_children: true
 ---
@@ -7,7 +7,8 @@ has_children: true
 # Delphi Epidata API
 
 This is the home of [Delphi](https://delphi.cmu.edu/)'s epidemiological data
-API.
+API for tracking epidemics such as influenza, dengue, and norovirus. Note that
+our work on COVID-19 is available in the [COVIDcast Epidata API documentation](covidcast.md).
 
 ## Contributing
 
@@ -36,17 +37,15 @@ like to cite it, we would gratefully recommend the following copy:
 
 ## Data licensing
 
-The majority of the data surfaced through this API is more or less just a
-carefully curated mirror of data acquired from various external parties. Such
-data is subject to its original licensing, where applicable.
-
----
+Several datasets surfaced through this API are carefully curated mirrors of data
+acquired from various external parties. Such data is subject to its original
+licensing, where applicable.
 
 Any data which is produced novelly by Delphi and is intentionally and openly
 surfaced by Delphi through this API is hereby licensed
-[CC-BY](https://creativecommons.org/licenses/by/4.0/). Endpoints, as specified
-by the `source` parameter, which are known to wholly or partially serve data
-under this license include:
+[CC BY](https://creativecommons.org/licenses/by/4.0/) except where otherwise
+noted. Endpoints, as specified by the `source` parameter, which are known to
+wholly or partially serve data under this license include:
 
 - `covidcast`
 - `covidcast_meta`
@@ -97,6 +96,7 @@ The parameters available for each source are documented in each linked source-sp
 | --- | --- | --- | --- |
 | [`covidcast`](covidcast.md) | COVIDCast | Delphi's COVID-19 surveillance streams. | no |
 | [`covidcast_meta`](covidcast_meta.md) | COVIDCast Metadata | Metadata for Delphi's COVID-19 surveillance streams. | no |
+| [`covid_hosp`](covid_hosp.md) | COVID-19 Hospitalization | COVID-19 Reported Patient Impact and Hospital Capacity. | no |
 
 ### Influenza Data
 

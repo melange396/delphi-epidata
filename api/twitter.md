@@ -1,6 +1,6 @@
 ---
 title: Twitter Stream
-parent: Delphi Epidata API
+parent: Epidata API (Other Diseases)
 ---
 
 # Twitter Stream

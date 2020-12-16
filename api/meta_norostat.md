@@ -1,6 +1,6 @@
 ---
 title: NoroSTAT Metadata
-parent: Delphi Epidata API
+parent: Epidata API (Other Diseases)
 ---
 
 # NoroSTAT Metadata

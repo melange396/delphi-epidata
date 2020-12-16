@@ -1,6 +1,6 @@
 ---
 title: Digital Surveillance Sensors
-parent: Delphi Epidata API
+parent: Epidata API (Other Diseases)
 ---
 
 # Digital Surveillance Sensors

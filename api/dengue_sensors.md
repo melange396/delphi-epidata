@@ -1,6 +1,6 @@
 ---
 title: Dengue Digital Surveillance
-parent: Delphi Epidata API
+parent: Epidata API (Other Diseases)
 ---
 
 # Dengue Digital Surveillance Sensors

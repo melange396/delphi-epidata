@@ -1,7 +1,7 @@
 ---
 title: Google Symptom Surveys
 parent: Inactive Signals
-grand_parent: COVIDcast API
+grand_parent: COVIDcast Epidata API
 ---
 
 # Google Symptom Surveys
@@ -11,6 +11,8 @@ grand_parent: COVIDcast API
 * **Number of data revisions since 19 May 2020:** 0
 * **Date of last change:** Never
 * **Available for:** county, hrr, msa, state (see [geography coding docs](../covidcast_geography.md))
+* **Time type:** day (see [date format docs](../covidcast_times.md))
+* **License:** [CC BY](../covidcast_licensing.md#creative-commons-attribution)
 
 Data source based on Google-run symptom surveys, through publisher websites,
 their Opinions Reward app, and similar applications. Respondents can opt to skip

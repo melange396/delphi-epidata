@@ -1,6 +1,6 @@
 ---
 title: Metadata
-parent: Delphi Epidata API
+parent: Epidata API (Other Diseases)
 ---
 
 # API Metadata
